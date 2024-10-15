@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
+
 defaults: &defaults
   working_directory: ~/repo
   docker:
@@ -25,7 +28,8 @@ jobs:
           command: npm run test:coverage
       - store_test_results:
           path: test-results.xml
-
+      
+      - sonarcloud/scan
 
       - save_cache:
           paths:
@@ -63,8 +67,8 @@ jobs:
 workflows:
   test-deploy:
     jobs:
-      - test
-
+      - test:
+          context: SonarCloud
       - deploy:
           context: dev
           requires:
