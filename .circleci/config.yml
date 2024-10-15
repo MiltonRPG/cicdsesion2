@@ -20,6 +20,12 @@ jobs:
       - run:
           name: Run lint
           command: npm run lint:report
+      - run:
+          name: Run tests
+          command: npm run test:coverage
+      - store_test_results:
+          path: test-results.xml
+
 
       - save_cache:
           paths:
